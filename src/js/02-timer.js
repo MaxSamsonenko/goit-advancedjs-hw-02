@@ -43,9 +43,9 @@ const options = {
     if (selectedDates[0].getTime() > currentTime.getTime()) {
       startBtn.removeAttribute('disabled');
       selectedTime = selectedDates[0].getTime();
+      return;
     }
     iziToast.show(message);
-    return;
   },
 };
 function updateTimer(targetDate) {
