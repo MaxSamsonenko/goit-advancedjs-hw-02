@@ -1,5 +1,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 //access the elements on page
 const minutesEl = document.querySelector('[data-minutes]');
 const daysEl = document.querySelector('[data-days]');
@@ -20,6 +22,16 @@ function startBtnHandler() {
     updateTimer(selectedTime);
   }, 1000);
 }
+//iziToast options
+const message = {
+  title: 'Error',
+  message: 'Please choose a date in the future',
+  titleColor: '#ffffff',
+  messageColor: '#ffffff',
+  backgroundColor: 'rgb(231, 39, 39)',
+  theme: 'light',
+  position: 'topCenter',
+};
 //flatpicker options
 const options = {
   enableTime: true,
@@ -32,6 +44,7 @@ const options = {
       startBtn.removeAttribute('disabled');
       selectedTime = selectedDates[0].getTime();
     }
+    iziToast.show(message);
     return;
   },
 };
@@ -48,10 +61,10 @@ function updateTimer(targetDate) {
   // Calculate days, hours, minutes, and seconds from timeRemaining
   const { days, hours, minutes, seconds } = convertMs(timeRemaining);
   // Update the timer elements with the calculated values
-  daysEl.textContent = formatTimeValue(days);
-  hoursEl.textContent = formatTimeValue(hours);
-  minutesEl.textContent = formatTimeValue(minutes);
-  secondsEl.textContent = formatTimeValue(seconds);
+  daysEl.textContent = addLeadingZero(days);
+  hoursEl.textContent = addLeadingZero(hours);
+  minutesEl.textContent = addLeadingZero(minutes);
+  secondsEl.textContent = addLeadingZero(seconds);
 }
 
 flatpickr('#datetime-picker', options);
@@ -75,6 +88,6 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 //add leading zeros to the timer values
-function formatTimeValue(value) {
+function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
