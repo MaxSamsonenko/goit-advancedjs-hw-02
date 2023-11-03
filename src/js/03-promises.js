@@ -1,18 +1,6 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-//iziToast options
-const errorMessage = {
-  title: '',
-  message: '',
-  position: 'topRight',
-};
-const successMessage = {
-  title: '',
-  message: '',
-  position: 'topRight',
-};
-
 //get form element
 const form = document.querySelector('.form');
 //an object for storing form input values
@@ -39,13 +27,17 @@ function handleFormSubmit(e) {
 }
 //callback function if promise fulfilled
 function onSuccess({ position, delay }) {
-  successMessage.message = `Fulfilled promise ${position} in ${delay}ms`;
-  iziToast.success(successMessage);
+  iziToast.success({
+    message: `Fulfilled promise ${position} in ${delay}ms`,
+    position: 'topRight',
+  });
 }
 //callback function if promise rejected
 function onError({ position, delay }) {
-  errorMessage.message = `Rejected promise ${position} in ${delay}ms`;
-  iziToast.error(errorMessage);
+  iziToast.error({
+    message: `Rejected promise ${position} in ${delay}ms`,
+    position: 'topRight',
+  });
 }
 //create promise
 function createPromise(position, delay) {
