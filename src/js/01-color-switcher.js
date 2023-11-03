@@ -5,12 +5,14 @@ const stopBtn = document.querySelector('[data-stop]');
 //add event listeners to the start/stop btns
 startBtn.addEventListener('click', startClickHandler);
 stopBtn.addEventListener('click', stopClickHandler);
+stopBtn.setAttribute('disabled', 'true');
 
 //specify timerId variable
 let timerId;
 //start callback
 function startClickHandler() {
   startBtn.setAttribute('disabled', 'true');
+  stopBtn.removeAttribute('disabled');
   timerId = setInterval(() => {
     body.style.backgroundColor = getRandomHexColor();
   }, 1000);
@@ -18,6 +20,8 @@ function startClickHandler() {
 //stop callback
 function stopClickHandler() {
   startBtn.removeAttribute('disabled');
+  stopBtn.setAttribute('disabled', 'true');
+
   clearInterval(timerId);
 }
 //function for random color creation
@@ -26,4 +30,3 @@ function getRandomHexColor() {
     .toString(16)
     .padStart(6, 0)}`;
 }
-console.log(getRandomHexColor());

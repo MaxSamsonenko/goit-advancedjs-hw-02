@@ -7,6 +7,7 @@ const minutesEl = document.querySelector('[data-minutes]');
 const daysEl = document.querySelector('[data-days]');
 const hoursEl = document.querySelector('[data-hours]');
 const secondsEl = document.querySelector('[data-seconds]');
+const input = document.getElementById('datetime-picker');
 const startBtn = document.querySelector('[data-start]');
 //add disabled attribute to button
 startBtn.setAttribute('disabled', 'true');
@@ -18,6 +19,8 @@ let intervalId;
 
 //start button handler
 function startBtnHandler() {
+  startBtn.setAttribute('disabled', 'true');
+  input.setAttribute('disabled', 'true');
   intervalId = setInterval(() => {
     updateTimer(selectedTime);
   }, 1000);
@@ -56,6 +59,7 @@ function updateTimer(targetDate) {
   // stop countdown if reached zero
   if (timeRemaining <= 0) {
     clearInterval(intervalId);
+    input.removeAttribute('disabled');
     return;
   }
   // Calculate days, hours, minutes, and seconds from timeRemaining

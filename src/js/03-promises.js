@@ -3,27 +3,21 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 //get form element
 const form = document.querySelector('.form');
-//an object for storing form input values
-const userInput = {};
-//variable for storing promise number
-let promiseCounter = 0;
-//add event listeners to form element
-form.addEventListener('input', handleUserInput);
+
+//add event listener to form element
 form.addEventListener('submit', handleFormSubmit);
-//get user input values and store them in userInput object
-function handleUserInput(e) {
-  userInput[e.target.name] = Number(e.target.value);
-}
+
 //handle form submit
 function handleFormSubmit(e) {
   e.preventDefault();
-  let step = userInput.delay;
+  const { amount, step, delay } = e.target.elements;
+  let promiseDelay = Number(delay.value);
   //create promises according to amount value
-  for (let i = 0; i < userInput.amount; i += 1) {
-    promiseCounter += 1;
-    createPromise(promiseCounter, step).then(onSuccess).catch(onError);
-    step += userInput.step;
+  for (let i = 1; i <= Number(amount.value); i += 1) {
+    createPromise(i, promiseDelay).then(onSuccess).catch(onError);
+    promiseDelay += Number(step.value);
   }
+  form.reset();
 }
 //callback function if promise fulfilled
 function onSuccess({ position, delay }) {
